@@ -1,13 +1,25 @@
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
 import { ListGroupItem } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const ProductScreen = ({ match }) => {
   // https://v5.reactrouter.com/web/api/match
   // :id is from the one created in App.js => <Route path='/product/:id' component={ProductScreen} />
-  const product = products.find(item => item._id === match.params.id);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+
+      setProduct(data);
+    };
+    fetchProduct();
+  });
+
+  const [product, setProduct] = useState({});
+
   return (
     <>
       <Link className='btn btn-dark my-3' to='/'>
