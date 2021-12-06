@@ -16,7 +16,7 @@ const ProductScreen = ({ match }) => {
       setProduct(data);
     };
     fetchProduct();
-  });
+  }, [match]);
 
   const [product, setProduct] = useState({});
 
