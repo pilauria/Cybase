@@ -2,7 +2,9 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import colors from 'colors';
-import products from './data/products.js';
+import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+
+import productRoutes from './routes/productRoutes.js';
 
 dotenv.config();
 
@@ -10,21 +12,17 @@ connectDB();
 
 const app = express();
 
+// --- MOUNT ROUTES --- //
+
 app.get('/', (req, res) => {
   res.send('API is running...');
 });
+// anything that goes into /api/products is gonna be linked with productRoutes
+app.use('/api/products', productRoutes);
 
-// list of products
-app.get('/api/products', (req, res) => {
-  //convert product.js in json file
-  res.json(products);
-});
+app.use(notFound);
 
-// single product
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find(item => item._id === req.params.id);
-  res.json(product);
-});
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
