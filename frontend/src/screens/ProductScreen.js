@@ -106,7 +106,7 @@ const ProductScreen = ({ history, match }) => {
               <ListGroup.Item className='d-flex justify-content-center'>
                 <Button
                   onClick={addToCartHandler}
-                  className='btn-block'
+                  className='btn-block button-cust'
                   type='button'
                   disabled={product.countInStock === 0}
                 >
