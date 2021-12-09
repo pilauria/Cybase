@@ -12,6 +12,9 @@ connectDB();
 
 const app = express();
 
+// middleware that allow us to accept JSON data in the body
+app.use(express.json());
+
 // --- MOUNT ROUTES --- //
 
 app.get('/', (req, res) => {

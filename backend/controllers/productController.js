@@ -1,4 +1,4 @@
-import asyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler'; // to handle try/catch and not to write evertime (https://www.npmjs.com/package/express-async-handler)
 import Product from '../models/productModel.js';
 
 // @desc   Fetch all products  (root:api/products)
@@ -23,3 +23,5 @@ const getProductById = asyncHandler(async (req, res) => {
     throw new Error('Product not found');
   }
 });
+
+export { getProducts, getProductById };
