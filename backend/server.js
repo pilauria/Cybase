@@ -5,6 +5,7 @@ import colors from 'colors';
 import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -12,7 +13,7 @@ connectDB();
 
 const app = express();
 
-// middleware that allow us to accept JSON data in the body
+// middleware that allow us to accept JSON data in the body //***/
 app.use(express.json());
 
 // --- MOUNT ROUTES --- //
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 });
 // anything that goes into /api/products is gonna be linked with productRoutes
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 app.use(notFound);
 
@@ -36,3 +38,5 @@ app.listen(
       .bold
   )
 );
+
+//***/ a middleware is a function that has access to the req,res cicle
