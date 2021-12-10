@@ -21,7 +21,7 @@ const PaymentScreen = ({ history }) => {
     e.preventDefault();
     dispatch(savePaymentMethod(paymentMethod));
     // after the dispac we move to the next page
-    history.push('/plceorder');
+    history.push('/placeorder');
   };
 
   return (
@@ -30,7 +30,7 @@ const PaymentScreen = ({ history }) => {
       <h1>Payment Method</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group>
-          <Form.Label as='legend'>Select Method</Form.Label>
+          <Form.Label as='legend'>Select Method </Form.Label>
 
           <Col>
             <Form.Check
