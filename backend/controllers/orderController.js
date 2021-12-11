@@ -62,7 +62,6 @@ const getOrderById = asyncHandler(async (req, res) => {
 // @route  GET /api/orders/:id/pay
 // @access Private
 const updateOrderToPaid = asyncHandler(async (req, res) => {
-  // in addition to the order info we want to get the user name  & email associate with the order (populate)
   const order = await Order.findById(req.params.id);
 
   if (order) {
@@ -84,4 +83,12 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
   }
 });
 
-export { addOrderItems, getOrderById, updateOrderToPaid };
+// @desc   Get logged in user orders
+// @route  GET /api/orders/myorders
+// @access Private
+const getMyOrders = asyncHandler(async (req, res) => {
+  const orders = await Order.find({ user: req.user._id }); // find just the logged in user
+  res.json(orders);
+});
+
+export { addOrderItems, getOrderById, updateOrderToPaid, getMyOrders };
