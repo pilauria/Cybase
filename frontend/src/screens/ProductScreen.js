@@ -21,6 +21,7 @@ import {
   PRODUCT_CREATE_REV_FAIL,
   PRODUCT_CREATE_REV_RESET,
 } from '../constants/productConstants';
+import Meta from '../components/Meta';
 
 // https://v5.reactrouter.com/web/api/match
 // :id is from the one created in App.js => <Route path='/product/:id' component={ProductScreen} />
@@ -76,6 +77,7 @@ const ProductScreen = ({ history, match }) => {
         <Message variant='danger'>{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={product.image} alt={product.name} fluid></Image>
