@@ -53,7 +53,7 @@ const ProductEditScreen = ({ match, history }) => {
   }, [dispatch, history, productId, product, successUpdate]);
 
   const uploadFileHandler = async e => {
-    const file = e.target.files[0];
+    const file = e.target.files[0]; // this is an array, since we have the possibility to upload multiple files
     const formData = new FormData();
     formData.append('image', file);
     setUploading(true);
@@ -93,10 +93,9 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <>
-      <Link to='/admin/productList' className='btn btn-light my-3 button-cust'>
+      <Link to='/admin/productlist' className='btn btn-light my-3 button-cust'>
         Go Back
       </Link>
-
       <FormContainer>
         <h1>Edit Product</h1>
         {loadingUpdate && <Loader />}
