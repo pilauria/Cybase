@@ -5,9 +5,34 @@ import Product from '../models/productModel.js';
 // @route  GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
+  const pageSize = 10;
+  const page = Number(req.query.pageNumber) || 1;
+  // Keyword searches by Name and Brand (mongoose)
+  const keyword = req.query.keyword
+    ? {
+        $or: [
+          {
+            name: {
+              $regex: req.query.keyword, // in this way we can write something that is not the exact name and we can stil get results (i.r. if I write iph I still want iphone to come up)
+              $options: 'i', // case insensitive
+            },
+          },
+          {
+            brand: {
+              $regex: req.query.keyword,
+              $options: 'i',
+            },
+          },
+        ],
+      }
+    : {};
 
-  res.json(products);
+  const count = await Product.countDocuments({ ...keyword });
+  const products = await Product.find({ ...keyword })
+    .limit(pageSize) // if the pageSize is 2, it only gonna get us 2 products
+    .skip(pageSize * page - 1); // give us the correct place of the product
+
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
 // @desc   Fetch single product
