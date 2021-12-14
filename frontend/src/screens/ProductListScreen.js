@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Table, Button, Row, Col } from 'react-bootstrap';
@@ -18,7 +19,7 @@ const ProductListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const productList = useSelector(state => state.productList);
-  const { loading, error, products, pages, page } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   const productDelete = useSelector(state => state.productDelete);
   const {

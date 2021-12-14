@@ -22,6 +22,7 @@ import {
   PRODUCT_TOP_REQUEST,
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
+  PRODUCT_CREATE_REV_RESET,
 } from '../constants/productConstants';
 import { logout } from './userActions';
 
@@ -61,6 +62,8 @@ export const listProductDetails = id => async dispatch => {
       type: PRODUCT_DETAILS_SUCCESS,
       payload: data,
     });
+
+    dispatch({ type: PRODUCT_CREATE_REV_RESET });
   } catch (error) {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,

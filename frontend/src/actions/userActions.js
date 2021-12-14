@@ -12,6 +12,7 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  PRODUCT_CREATE_REV_RESET,
   USER_DETAILS_RESET,
   USER_LIST_FAIL,
   USER_LIST_SUCCESS,
@@ -69,6 +70,7 @@ export const logout = () => dispatch => {
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
   dispatch({ type: USER_LIST_RESET });
+  dispatch({ type: PRODUCT_CREATE_REV_RESET });
 };
 
 export const register = (name, email, password) => async dispatch => {

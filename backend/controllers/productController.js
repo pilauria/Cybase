@@ -5,25 +5,16 @@ import Product from '../models/productModel.js';
 // @route  GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 6;
+  const pageSize = 4;
   const page = Number(req.query.pageNumber) || 1;
+
   // Keyword searches by Name and Brand (mongoose)
   const keyword = req.query.keyword
     ? {
-        $or: [
-          {
-            name: {
-              $regex: req.query.keyword, // in this way we can write something that is not the exact name and we can stil get results (i.r. if I write iph I still want iphone to come up)
-              $options: 'i', // case insensitive
-            },
-          },
-          {
-            brand: {
-              $regex: req.query.keyword,
-              $options: 'i',
-            },
-          },
-        ],
+        name: {
+          $regex: req.query.keyword, // in this way we can write something that is not the exact name and we can stil get results (i.r. if I write iph I still want iphone to come up)
+          $options: 'i', // case insensitive
+        },
       }
     : {};
 
