@@ -106,8 +106,8 @@ const updateOrderToOutForDeliver = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
   if (order) {
-    order.isOutForDeliver = true;
-    order.outForDeliverAt = Date.now();
+    order.isDelivered = true;
+    order.deliveredAt = Date.now();
 
     // save the order in the DB
     const updatedOrder = await order.save();
