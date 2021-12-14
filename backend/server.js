@@ -23,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 // middleware that allow us to accept JSON data in the body //***/
 app.use(express.json());
 
-// --- MOUNT ROUTES --- //
+// --- MOUNTING ROUTES --- //
 
 app.get('/', (req, res) => {
   res.send('API is running...');

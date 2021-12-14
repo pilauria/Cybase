@@ -92,7 +92,7 @@ const ProductEditScreen = ({ match, history }) => {
   };
 
   return (
-    <>
+    <div>
       <Link to='/admin/productlist' className='btn btn-light my-3 button-cust'>
         Go Back
       </Link>
@@ -134,12 +134,13 @@ const ProductEditScreen = ({ match, history }) => {
                 value={image}
                 onChange={e => setImage(e.target.value)}
               ></Form.Control>
-              <Form.File
+              <Form.Control
+                type='file'
                 id='image-file'
-                label='Choose File'
+                label='Choose file'
                 custom
                 onChange={uploadFileHandler}
-              ></Form.File>
+              />
               {uploading && <Loader />}
             </Form.Group>
 
@@ -189,7 +190,7 @@ const ProductEditScreen = ({ match, history }) => {
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 

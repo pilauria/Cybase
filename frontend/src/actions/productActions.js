@@ -15,7 +15,6 @@ import {
   PRODUCT_CREATE_FAIL,
   PRODUCT_UPDATE_REQUEST,
   PRODUCT_UPDATE_SUCCESS,
-  PRODUCT_UPDATE_RESET,
   PRODUCT_UPDATE_FAIL,
   PRODUCT_CREATE_REV_REQUEST,
   PRODUCT_CREATE_REV_SUCCESS,
@@ -24,6 +23,7 @@ import {
   PRODUCT_TOP_SUCCESS,
   PRODUCT_TOP_FAIL,
 } from '../constants/productConstants';
+import { logout } from './userActions';
 
 // action creator function (before we did it with useEffect in Homestreen.js to fetch the list products) - it will be fired off in the Home screen
 export const listProducts =
@@ -127,12 +127,16 @@ export const createProduct = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
     dispatch({
       type: PRODUCT_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
@@ -165,12 +169,16 @@ export const updateProduct = product => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
     dispatch({
-      type: PRODUCT_CREATE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      type: PRODUCT_UPDATE_FAIL,
+      payload: message,
     });
   }
 };
@@ -199,16 +207,19 @@ export const createProductReview =
         type: PRODUCT_CREATE_REV_SUCCESS,
       });
     } catch (error) {
+      const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      if (message === 'Not authorized, token failed') {
+        dispatch(logout());
+      }
       dispatch({
         type: PRODUCT_CREATE_REV_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: message,
       });
     }
   };
-
 export const listTopProducts = () => async dispatch => {
   try {
     dispatch({ type: PRODUCT_TOP_REQUEST });
