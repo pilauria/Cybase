@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
 main {
   min-height: 85vh;
 }
@@ -13,6 +18,23 @@ h1 {
 
 h3 {
   padding: 1rem 0;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.main-text {
+  margin-top: 20px;
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.img-responsive {
+  height: 50px;
+  width: auto;
 }
 
 /* ----------- BUTTONS ---------- */
@@ -39,4 +61,91 @@ h3 {
 .button-cust:active {
   position: relative;
   top: 1px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.button-cust-dark {
+  box-shadow: 3px 5px 9px 1px #a6b8bf;
+  background: linear-gradient(to bottom, #a8b8bd 5%, #1d2224 100%);
+  background-color: #a8b8bd;
+  border-radius: 9px;
+
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 9px 24px;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #5b6178;
+}
+.button-cust-dark :hover {
+  background: linear-gradient(to bottom, #1d2224 5%, #a8b8bd 100%);
+  background-color: #ffffff;
+  color: #fff;
+}
+.button-cust-dark :active {
+  position: relative;
+  top: 1px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  border-bottom: 4px solid #fff;
+}
+
+/* --- SCROLLER ---- */
+
+.carousel-item-next,
+.carousel-item-prev,
+.carousel-item.active {
+  display: flex;
+  padding-top: 15px;
+}
+.carousel-caption {
+  position: absolute;
+  top: 0;
+}
+
+.carousel-caption h2 {
+  color: #fff;
+}
+
+.carousel img {
+  height: 270px;
+  padding: 25px;
+  margin-top: 35px;
+  border-radius: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.carousel a {
+  margin: 0 auto;
+}
+@media (max-width: 900px) {
+  .carousel-caption h2 {
+    font-size: 3.4vw;
+  }
+  .main-text {
+    font-size: 1.5rem;
+    margin: 0 auto -20px auto;
+  }
+
+  /* .carousel {
+    margin-top: 60px;
+  }
+  .navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  } */
 }
