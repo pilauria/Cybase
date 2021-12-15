@@ -37,6 +37,7 @@ app.get('/api/config/paypal', (req, res) =>
 
 // make the 'uploads' folder STATIC, so that it can be loaded in the browser
 const __dirname = path.resolve(); // to bring dirname in es6 module otherwise we can't use it with es6 modules
+
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 if (process.env.NODE_ENV === 'production') {
