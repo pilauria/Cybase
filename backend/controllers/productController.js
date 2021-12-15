@@ -1,13 +1,12 @@
-import asyncHandler from 'express-async-handler'; // to handle try/catch and not to write evertime (https://www.npmjs.com/package/express-async-handler)
+import asyncHandler from 'express-async-handler';
 import Product from '../models/productModel.js';
 
-// @desc   Fetch all products  (root:api/products)
-// @route  GET /api/products
-// @access Public
+// @desc    Fetch all products
+// @route   GET /api/products
+// @access  Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 4;
+  const pageSize = 10;
   const page = Number(req.query.pageNumber) || 1;
-
   // Keyword searches by Name and Brand (mongoose)
   const keyword = req.query.keyword
     ? {
@@ -21,14 +20,14 @@ const getProducts = asyncHandler(async (req, res) => {
   const count = await Product.countDocuments({ ...keyword });
   const products = await Product.find({ ...keyword })
     .limit(pageSize) // if the pageSize is 2, it only gonna get us 2 products
-    .skip(pageSize * page - 1); // give us the correct place of the product
+    .skip(pageSize * (page - 1)); // give us the correct place of the product
 
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
-// @desc   Fetch single product
-// @route  GET /api/products/:id
-// @access Public
+// @desc    Fetch single product
+// @route   GET /api/products/:id
+// @access  Public
 const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
@@ -40,14 +39,13 @@ const getProductById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc  Delete a product
-// @route  DELETE /api/products/:id
-// @access Private/Admin
+// @desc    Delete a product
+// @route   DELETE /api/products/:id
+// @access  Private/Admin
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
   if (product) {
-    // any admin can delete (and do the same operation as all the other admins)
     await product.remove();
     res.json({ message: 'Product removed' });
   } else {
@@ -56,12 +54,12 @@ const deleteProduct = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc  Create a product
-// @route  POST /api/products
-// @access Private/Admin
+// @desc    Create a product
+// @route   POST /api/products
+// @access  Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: 'Sample Name',
+    name: 'Sample name',
     price: 0,
     user: req.user._id,
     image: '/images/sample.jpg',
@@ -102,7 +100,7 @@ const updateProduct = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Create a review
+// @desc    Create new review
 // @route   POST /api/products/:id/reviews
 // @access  Private
 const createProductReview = asyncHandler(async (req, res) => {
@@ -112,12 +110,12 @@ const createProductReview = asyncHandler(async (req, res) => {
 
   if (product) {
     const alreadyReviewed = product.reviews.find(
-      review => review.user.toString() === req.user._id.toString()
+      r => r.user.toString() === req.user._id.toString()
     );
 
     if (alreadyReviewed) {
       res.status(400);
-      throw new Error('Product already reviewed!');
+      throw new Error('Product already reviewed');
     }
 
     const review = {
@@ -143,11 +141,12 @@ const createProductReview = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc    Top rated products
+// @desc   Top rated products
 // @route   GET /api/products/top
 // @access  Public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(6);
+  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+
   res.json(products);
 });
 

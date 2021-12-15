@@ -1,16 +1,15 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
+import FormContainer from '../components/FormContainer';
 import { getUserDetails, updateUser } from '../actions/userActions';
 import { USER_UPDATE_RESET } from '../constants/userConstants';
-import FormContainer from '../components/FormContainer';
 
 const UserEditScreen = ({ match, history }) => {
-  const userId = match.params.id; // the URL
+  const userId = match.params.id;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -31,10 +30,8 @@ const UserEditScreen = ({ match, history }) => {
   useEffect(() => {
     if (successUpdate) {
       dispatch({ type: USER_UPDATE_RESET });
-      // redirect
       history.push('/admin/userlist');
     } else {
-      // if doesn't exist || doesn't match the URL
       if (!user.name || user._id !== userId) {
         dispatch(getUserDetails(userId));
       } else {
@@ -43,7 +40,7 @@ const UserEditScreen = ({ match, history }) => {
         setIsAdmin(user.isAdmin);
       }
     }
-  }, [dispatch, history, user, userId, successUpdate]);
+  }, [dispatch, history, userId, user, successUpdate]);
 
   const submitHandler = e => {
     e.preventDefault();
@@ -51,11 +48,10 @@ const UserEditScreen = ({ match, history }) => {
   };
 
   return (
-    <>
-      <Link to='/admin/userList' className='btn btn-light my-3 button-cust'>
+    <div>
+      <Link to='/admin/userlist' className='btn btn-light my-3'>
         Go Back
       </Link>
-
       <FormContainer>
         <h1>Edit User</h1>
         {loadingUpdate && <Loader />}
@@ -63,11 +59,11 @@ const UserEditScreen = ({ match, history }) => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variand='danger'>{error}</Message>
+          <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
-              <Form.Label>Name </Form.Label>
+              <Form.Label>Name</Form.Label>
               <Form.Control
                 type='name'
                 placeholder='Enter name'
@@ -77,7 +73,7 @@ const UserEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId='email'>
-              <Form.Label>Email </Form.Label>
+              <Form.Label>Email Address</Form.Label>
               <Form.Control
                 type='email'
                 placeholder='Enter email'
@@ -86,7 +82,7 @@ const UserEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId='isAdmin'>
+            <Form.Group controlId='isadmin'>
               <Form.Check
                 type='checkbox'
                 label='Is Admin'
@@ -95,13 +91,13 @@ const UserEditScreen = ({ match, history }) => {
               ></Form.Check>
             </Form.Group>
 
-            <Button type='submit' variant='primary button-cust'>
+            <Button type='submit' variant='primary'>
               Update
             </Button>
           </Form>
         )}
       </FormContainer>
-    </>
+    </div>
   );
 };
 

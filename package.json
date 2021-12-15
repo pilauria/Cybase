@@ -1,7 +1,7 @@
 {
-  "name": "mern-app",
+  "name": "cybase",
   "version": "1.0.0",
-  "description": "MERN ecommerce app",
+  "description": "Project3",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -10,18 +10,14 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
-    "data:destroy": "node backend/seeder -d,"
+    "data:destroy": "node backend/seeder -d",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pilauria/Project3.git"
   },
-  "author": "Pietro",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/pilauria/Project3/issues"
-  },
-  "homepage": "https://github.com/pilauria/Project3#readme",
+  "author": "Pietro Lauria",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
@@ -34,7 +30,7 @@
     "multer": "^1.4.2"
   },
   "devDependencies": {
-    "concurrently": "^6.4.0",
-    "nodemon": "^2.0.15"
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.4"
   }
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
   Col,
@@ -9,20 +10,15 @@ import {
   Button,
   Form,
 } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { useState, useEffect } from 'react';
+import Meta from '../components/Meta';
 import {
   listProductDetails,
   createProductReview,
 } from '../actions/productActions';
-import {
-  PRODUCT_CREATE_REV_FAIL,
-  PRODUCT_CREATE_REV_RESET,
-} from '../constants/productConstants';
-import Meta from '../components/Meta';
+import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstants';
 
 // https://v5.reactrouter.com/web/api/match
 // :id is from the one created in App.js => <Route path='/product/:id' component={ProductScreen} />
@@ -40,18 +36,22 @@ const ProductScreen = ({ history, match }) => {
   const { userInfo } = userLogin;
 
   const productReviewCreate = useSelector(state => state.productReviewCreate);
-  const { success: successProductReview, error: errorProductReview } =
-    productReviewCreate;
+  const {
+    success: successProductReview,
+    loading: loadingProductReview,
+    error: errorProductReview,
+  } = productReviewCreate;
 
   useEffect(() => {
     if (successProductReview) {
-      alert('Review Submitted!');
       setRating(0);
       setComment('');
-      dispatch({ type: PRODUCT_CREATE_REV_RESET });
     }
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match, successProductReview]);
+    if (!product._id || product._id !== match.params.id) {
+      dispatch(listProductDetails(match.params.id));
+      dispatch({ type: PRODUCT_CREATE_REVIEW_RESET });
+    }
+  }, [dispatch, match, successProductReview, product._id]);
 
   const addToCartHandler = () => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
@@ -68,8 +68,8 @@ const ProductScreen = ({ history, match }) => {
   };
 
   return (
-    <>
-      <Link className='btn btn-dark my-3' to='/'>
+    <div>
+      <Link className='button-cust-dark' to='/'>
         Go Back
       </Link>
       {loading ? (
@@ -77,11 +77,11 @@ const ProductScreen = ({ history, match }) => {
       ) : error ? (
         <Message variant='danger'>{error}</Message>
       ) : (
-        <>
+        <div>
           <Meta title={product.name} />
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid></Image>
+              <Image src={product.image} alt={product.name} fluid />
             </Col>
             <Col md={3}>
               <ListGroup variant='flush'>
@@ -92,66 +92,70 @@ const ProductScreen = ({ history, match }) => {
                   <Rating
                     value={product.rating}
                     text={`${product.numReviews} reviews`}
-                  ></Rating>
+                  />
                 </ListGroup.Item>
-                <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
+                <ListGroup.Item>Price: &euro; {product.price}</ListGroup.Item>
                 <ListGroup.Item>
                   Description: {product.description}
                 </ListGroup.Item>
               </ListGroup>
             </Col>
             <Col md={3}>
-              <Card variant='flush'>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Price:</Col>
-                    <Col>
-                      <strong>${product.price}</strong>
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <Row>
-                    <Col>Status:</Col>
-                    <Col>
-                      {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
-                    </Col>
-                  </Row>
-                </ListGroup.Item>
-                {product.countInStock > 0 && (
+              <Card>
+                <ListGroup variant='flush'>
                   <ListGroup.Item>
                     <Row>
-                      <Col>Qty</Col>
+                      <Col>Price:</Col>
                       <Col>
-                        <Form.Control
-                          as='select'
-                          value={qty}
-                          onChange={e => setQty(e.target.value)}
-                        >
-                          {[...Array(product.countInStock).keys()].map(x => (
-                            <option key={x + 1} value={x + 1}>
-                              {x + 1}
-                            </option>
-                          ))}
-                        </Form.Control>
+                        <strong>&euro; {product.price}</strong>
                       </Col>
                     </Row>
                   </ListGroup.Item>
-                )}
-                <ListGroup.Item className='d-flex justify-content-center'>
-                  <Button
-                    onClick={addToCartHandler}
-                    className='btn-block button-cust'
-                    type='button'
-                    disabled={product.countInStock === 0}
-                  >
-                    ADD TO CART
-                  </Button>
-                </ListGroup.Item>
+
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Status:</Col>
+                      <Col>
+                        {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+
+                  {product.countInStock > 0 && (
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>Qty</Col>
+                        <Col>
+                          <Form.Control
+                            as='select'
+                            value={qty}
+                            onChange={e => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(x => (
+                              <option key={x + 1} value={x + 1}>
+                                {x + 1}
+                              </option>
+                            ))}
+                          </Form.Control>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
+                  )}
+
+                  <ListGroup.Item className='text-center'>
+                    <Button
+                      onClick={addToCartHandler}
+                      className='btn-block button-cust'
+                      type='button'
+                      disabled={product.countInStock === 0}
+                    >
+                      Add To Cart
+                    </Button>
+                  </ListGroup.Item>
+                </ListGroup>
               </Card>
             </Col>
           </Row>
-
           <Row>
             <Col md={6}>
               <h2>Reviews</h2>
@@ -167,6 +171,12 @@ const ProductScreen = ({ history, match }) => {
                 ))}
                 <ListGroup.Item>
                   <h2>Write a Customer Review</h2>
+                  {successProductReview && (
+                    <Message variant='success'>
+                      Review submitted successfully
+                    </Message>
+                  )}
+                  {loadingProductReview && <Loader />}
                   {errorProductReview && (
                     <Message variant='danger'>{errorProductReview}</Message>
                   )}
@@ -196,7 +206,12 @@ const ProductScreen = ({ history, match }) => {
                           onChange={e => setComment(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
-                      <Button type='submit' variant='primary'>
+                      <Button
+                        disabled={loadingProductReview}
+                        type='submit'
+                        variant='primary'
+                        className='button-cust'
+                      >
                         Submit
                       </Button>
                     </Form>
@@ -209,9 +224,9 @@ const ProductScreen = ({ history, match }) => {
               </ListGroup>
             </Col>
           </Row>
-        </>
+        </div>
       )}
-    </>
+    </div>
   );
 };
 

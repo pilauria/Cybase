@@ -9,11 +9,11 @@ import Loader from '../components/Loader';
 import {
   getOrderDetails,
   payOrder,
-  outForDeliverOrder,
+  deliverOrder,
 } from '../actions/orderActions';
 import {
   ORDER_PAY_RESET,
-  ORDER_OUTFORDELIVER_RESET,
+  ORDER_DELIVER_RESET,
 } from '../constants/orderConstants';
 
 const OrderScreen = ({ match, history }) => {
@@ -29,9 +29,8 @@ const OrderScreen = ({ match, history }) => {
   const orderPay = useSelector(state => state.orderPay);
   const { loading: loadingPay, success: successPay } = orderPay;
 
-  const orderOutForDeliver = useSelector(state => state.orderOutForDeliver);
-  const { loading: loadingOutForDeliver, success: successOutForDeliver } =
-    orderOutForDeliver;
+  const orderDeliver = useSelector(state => state.orderDeliver);
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver;
 
   const userLogin = useSelector(state => state.userLogin);
   const { userInfo } = userLogin;
@@ -65,9 +64,9 @@ const OrderScreen = ({ match, history }) => {
       document.body.appendChild(script);
     };
 
-    if (!order || successPay || successOutForDeliver || order._id !== orderId) {
+    if (!order || successPay || successDeliver || order._id !== orderId) {
       dispatch({ type: ORDER_PAY_RESET });
-      dispatch({ type: ORDER_OUTFORDELIVER_RESET });
+      dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -76,23 +75,14 @@ const OrderScreen = ({ match, history }) => {
         setSdkReady(true);
       }
     }
-  }, [
-    dispatch,
-    order,
-    orderId,
-    successPay,
-    successOutForDeliver,
-    history,
-    userInfo,
-  ]);
+  }, [dispatch, orderId, successPay, successDeliver, order, history, userInfo]);
 
   const successPaymentHandler = paymentResult => {
-    console.log(paymentResult);
     dispatch(payOrder(orderId, paymentResult));
   };
 
-  const outForDeliverHandler = () => {
-    dispatch(outForDeliverOrder(order));
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order));
   };
 
   return loading ? (
@@ -101,7 +91,7 @@ const OrderScreen = ({ match, history }) => {
     <Message variant='danger'>{error}</Message>
   ) : (
     <>
-      <h1>Order n. {order._id}</h1>
+      <h1>Order for {order.user.name}</h1>
       <Row>
         <Col md={8}>
           <ListGroup variant='flush'>
@@ -115,7 +105,7 @@ const OrderScreen = ({ match, history }) => {
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
-                <strong>Address:</strong>
+                <strong>Address: </strong>
                 {order.shippingAddress.address}, {order.shippingAddress.city}{' '}
                 {order.shippingAddress.postalCode},{' '}
                 {order.shippingAddress.country}
@@ -157,7 +147,7 @@ const OrderScreen = ({ match, history }) => {
                             alt={item.name}
                             fluid
                             rounded
-                          ></Image>
+                          />
                         </Col>
                         <Col>
                           <Link to={`/product/${item.product}`}>
@@ -165,8 +155,7 @@ const OrderScreen = ({ match, history }) => {
                           </Link>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x € {item.price} = €{' '}
-                          {item.qty * item.price}
+                          {item.qty} x ${item.price} = ${item.qty * item.price}
                         </Col>
                       </Row>
                     </ListGroup.Item>
@@ -185,25 +174,25 @@ const OrderScreen = ({ match, history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Items</Col>
-                  <Col>€ {order.itemsPrice}</Col>
+                  <Col>${order.itemsPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Shipping</Col>
-                  <Col>€ {order.shippingPrice}</Col>
+                  <Col>${order.shippingPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Tax</Col>
-                  <Col>€ {order.taxPrice}</Col>
+                  <Col>${order.taxPrice}</Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col>€ {order.totalPrice}</Col>
+                  <Col>${order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
@@ -219,7 +208,7 @@ const OrderScreen = ({ match, history }) => {
                   )}
                 </ListGroup.Item>
               )}
-              {loadingOutForDeliver && <Loader />}
+              {loadingDeliver && <Loader />}
               {userInfo &&
                 userInfo.isAdmin &&
                 order.isPaid &&
@@ -227,10 +216,10 @@ const OrderScreen = ({ match, history }) => {
                   <ListGroup.Item>
                     <Button
                       type='button'
-                      className='btn btn-block button-cust'
-                      onClick={outForDeliverHandler}
+                      className='btn btn-block'
+                      onClick={deliverHandler}
                     >
-                      Mark as out for delivery
+                      Mark As Delivered
                     </Button>
                   </ListGroup.Item>
                 )}

@@ -1,13 +1,12 @@
-import React from 'react';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Carousel, Image } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from './Loader';
 import Message from './Message';
-import { listTopProducts } from '../actions/productActions.js';
-import { useDispatch, useSelector } from 'react-redux';
+import { listTopProducts } from '../actions/productActions';
 
-const ProductScroller = () => {
+const ProductCarousel = () => {
   const dispatch = useDispatch();
 
   const productTopRated = useSelector(state => state.productTopRated);
@@ -29,7 +28,7 @@ const ProductScroller = () => {
             <Image src={product.image} alt={product.name} fluid />
             <Carousel.Caption className='carousel-caption'>
               <h2>
-                {product.name} € {product.price}
+                {product.name} (${product.price})
               </h2>
             </Carousel.Caption>
           </Link>
@@ -39,4 +38,4 @@ const ProductScroller = () => {
   );
 };
 
-export default ProductScroller;
+export default ProductCarousel;

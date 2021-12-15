@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   USER_DETAILS_FAIL,
   USER_DETAILS_REQUEST,
@@ -12,7 +13,6 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
-  PRODUCT_CREATE_REV_RESET,
   USER_DETAILS_RESET,
   USER_LIST_FAIL,
   USER_LIST_SUCCESS,
@@ -21,11 +21,10 @@ import {
   USER_DELETE_REQUEST,
   USER_DELETE_SUCCESS,
   USER_DELETE_FAIL,
-  USER_UPDATE_REQUEST,
-  USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
+  USER_UPDATE_SUCCESS,
+  USER_UPDATE_REQUEST,
 } from '../constants/userConstants';
-import axios from 'axios';
 import { ORDER_LIST_MY_RESET } from '../constants/orderConstants';
 
 export const login = (email, password) => async dispatch => {
@@ -41,7 +40,6 @@ export const login = (email, password) => async dispatch => {
     };
 
     const { data } = await axios.post(
-      //***** */ <== data
       '/api/users/login',
       { email, password },
       config
@@ -66,11 +64,14 @@ export const login = (email, password) => async dispatch => {
 
 export const logout = () => dispatch => {
   localStorage.removeItem('userInfo');
+  localStorage.removeItem('cartItems');
+  localStorage.removeItem('shippingAddress');
+  localStorage.removeItem('paymentMethod');
   dispatch({ type: USER_LOGOUT });
   dispatch({ type: USER_DETAILS_RESET });
   dispatch({ type: ORDER_LIST_MY_RESET });
   dispatch({ type: USER_LIST_RESET });
-  dispatch({ type: PRODUCT_CREATE_REV_RESET });
+  document.location.href = '/login';
 };
 
 export const register = (name, email, password) => async dispatch => {
@@ -118,14 +119,13 @@ export const getUserDetails = id => async (dispatch, getState) => {
     dispatch({
       type: USER_DETAILS_REQUEST,
     });
-    //destructuring getState
+
     const {
       userLogin: { userInfo },
     } = getState();
 
     const config = {
       headers: {
-        'Content-Type': 'application/json',
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
@@ -137,12 +137,16 @@ export const getUserDetails = id => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
     dispatch({
       type: USER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
@@ -152,7 +156,7 @@ export const updateUserProfile = user => async (dispatch, getState) => {
     dispatch({
       type: USER_UPDATE_PROFILE_REQUEST,
     });
-    //destructuring getState
+
     const {
       userLogin: { userInfo },
     } = getState();
@@ -170,20 +174,22 @@ export const updateUserProfile = user => async (dispatch, getState) => {
       type: USER_UPDATE_PROFILE_SUCCESS,
       payload: data,
     });
-
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
-
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
     dispatch({
       type: USER_UPDATE_PROFILE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
@@ -211,12 +217,16 @@ export const listUsers = () => async (dispatch, getState) => {
       payload: data,
     });
   } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    if (message === 'Not authorized, token failed') {
+      dispatch(logout());
+    }
     dispatch({
       type: USER_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: message,
     });
   }
 };
@@ -293,6 +303,7 @@ export const updateUser = user => async (dispatch, getState) => {
     });
   }
 };
+
 /****  ==> data from  (userControllers.js when the user log =>  @route  POST /api/users/login):
  * const authUser = asyncHandler(async (req, res) => {
   // get data from the body ( see also postman {{URL/api/users/login}} )

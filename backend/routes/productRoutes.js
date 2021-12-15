@@ -8,20 +8,17 @@ import {
   createProductReview,
   getTopProducts,
 } from '../controllers/productController.js';
-import { protect, isAdmin } from '../middleware/authMiddleware.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.route('/').get(getProducts).post(protect, isAdmin, createProduct);
+router.route('/').get(getProducts).post(protect, admin, createProduct);
 router.route('/:id/reviews').post(protect, createProductReview);
 router.get('/top', getTopProducts);
 router
   .route('/:id')
   .get(getProductById)
-  .delete(protect, isAdmin, deleteProduct)
-  .put(protect, isAdmin, updateProduct);
+  .delete(protect, admin, deleteProduct)
+  .put(protect, admin, updateProduct);
 
-// express-async-handler
 export default router;
-
-// a middleware is a function that has access to the req,res cicle

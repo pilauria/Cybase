@@ -1,6 +1,6 @@
 // IMPLEMENTING 404 ERROR
 const notFound = (req, res, next) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`); //req.originalUrl=> is the url the user entered
+  const error = new Error(`Not Found - ${req.originalUrl}`);
   res.status(404);
   next(error);
 };

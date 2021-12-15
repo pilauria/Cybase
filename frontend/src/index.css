@@ -1,3 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+body {
+  font-family: 'Josefin Sans', sans-serif;
+}
 main {
   min-height: 85vh;
 }
@@ -13,6 +18,12 @@ h1 {
 
 h3 {
   padding: 1rem 0;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 /* ----------- BUTTONS ---------- */
@@ -46,6 +57,37 @@ h3 {
   justify-content: center;
 }
 
+.button-cust-dark {
+  box-shadow: 3px 5px 9px 1px #a6b8bf;
+  background: linear-gradient(to bottom, #a8b8bd 5%, #1d2224 100%);
+  background-color: #a8b8bd;
+  border-radius: 9px;
+
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 9px 24px;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #5b6178;
+}
+.button-cust-dark :hover {
+  background: linear-gradient(to bottom, #1d2224 5%, #a8b8bd 100%);
+  background-color: #ffffff;
+  color: #fff;
+}
+.button-cust-dark :active {
+  position: relative;
+  top: 1px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+
 /* --- SCROLLER ---- */
 
 .carousel-item-next,
@@ -63,10 +105,10 @@ h3 {
 }
 
 .carousel img {
-  height: 280px;
-  padding: 30px;
-  margin: 40px;
-  border-radius: 80%;
+  height: 270px;
+  padding: 25px;
+  margin-top: 35px;
+  border-radius: 30%;
   margin-left: auto;
   margin-right: auto;
 }

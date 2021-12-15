@@ -1,9 +1,8 @@
-// validate the token
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'; // validate the token
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 
-// we use this middleware to protect the routes (we use in the routes we want protect, like isLoggedIn in the previous project)
+// middleware to protect the routes (we use in the routes we want protect, like isLoggedIn in the previous project)
 const protect = asyncHandler(async (req, res, next) => {
   let token;
 
@@ -12,7 +11,7 @@ const protect = asyncHandler(async (req, res, next) => {
     req.headers.authorization.startsWith('Bearer')
   ) {
     try {
-      // torn the bearer token into an array [bearer, token] and extract the token
+      // turn the bearer token into an array [bearer, token] and extract the token
       token = req.headers.authorization.split(' ')[1];
 
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -26,7 +25,7 @@ const protect = asyncHandler(async (req, res, next) => {
     } catch (error) {
       console.error(error);
       res.status(401);
-      throw new Error('Not authirized, token failed');
+      throw new Error('Not authorized, token failed');
     }
   }
 
@@ -36,7 +35,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-const isAdmin = (req, res, next) => {
+const admin = (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
@@ -45,4 +44,4 @@ const isAdmin = (req, res, next) => {
   }
 };
 
-export { protect, isAdmin };
+export { protect, admin };

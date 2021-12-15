@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
 
 const Rating = ({ value, text, color }) => {
   return (
@@ -64,21 +63,13 @@ const Rating = ({ value, text, color }) => {
           }
         ></i>
       </span>
-      {/* if there is text then show it */}
       <span>{text && text}</span>
     </div>
-  );
-};
+  )
+}
 
 Rating.defaultProps = {
-  color: '#ebeb17',
-};
+  color: '#f8e825',
+}
 
-// typecheck the props (check if passing the correct type of props)
-Rating.propTypes = {
-  value: PropTypes.number.isRequired,
-  color: PropTypes.string,
-  text: PropTypes.string.isRequired,
-};
-
-export default Rating;
+export default Rating

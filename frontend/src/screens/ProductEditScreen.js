@@ -1,17 +1,16 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import { listProductDetails, updateProduct } from '../actions/productActions';
 import FormContainer from '../components/FormContainer';
+import { listProductDetails, updateProduct } from '../actions/productActions';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
-import axios from 'axios';
 
 const ProductEditScreen = ({ match, history }) => {
-  const productId = match.params.id; // the URL
+  const productId = match.params.id;
 
   const [name, setName] = useState('');
   const [price, setPrice] = useState(0);
@@ -94,7 +93,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <div>
-      <Link to='/admin/productlist' className='btn btn-light my-3 button-cust'>
+      <Link to='/admin/productlist' className='btn btn-light my-3'>
         Go Back
       </Link>
       <FormContainer>
@@ -104,7 +103,7 @@ const ProductEditScreen = ({ match, history }) => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <Message variand='danger'>{error}</Message>
+          <Message variant='danger'>{error}</Message>
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId='name'>
@@ -135,13 +134,12 @@ const ProductEditScreen = ({ match, history }) => {
                 value={image}
                 onChange={e => setImage(e.target.value)}
               ></Form.Control>
-              <Form.Control
-                type='file'
+              <Form.File
                 id='image-file'
-                label='Choose file'
+                label='Choose File'
                 custom
                 onChange={uploadFileHandler}
-              />
+              ></Form.File>
               {uploading && <Loader />}
             </Form.Group>
 
@@ -156,7 +154,7 @@ const ProductEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId='countInStock'>
-              <Form.Label>Count in stock</Form.Label>
+              <Form.Label>Count In Stock</Form.Label>
               <Form.Control
                 type='number'
                 placeholder='Enter countInStock'
@@ -185,7 +183,7 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Button type='submit' variant='primary button-cust'>
+            <Button type='submit' variant='primary'>
               Update
             </Button>
           </Form>
