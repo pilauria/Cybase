@@ -70,7 +70,7 @@ const ProductScreen = ({ history, match }) => {
   return (
     <div>
       <Link className='button-cust-dark' to='/'>
-        Go Back
+        <i class='fas fa-angle-double-left'>&nbsp;&nbsp; Back</i>
       </Link>
       {loading ? (
         <Loader />

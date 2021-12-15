@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header>
       <Navbar
-        className='ml-auto py-1 '
+        className='ml-auto py-1 fixed-top mb-5'
         bg='info'
         variant='dark'
         expand='lg'

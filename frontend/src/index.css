@@ -139,6 +139,11 @@ h3 {
     font-size: 1.5rem;
     margin: 0 auto -20px auto;
   }
+  .img-responsive {
+    height: 28px;
+    width: auto;
+    margin-left: -39%;
+  }
 
   /* .carousel {
     margin-top: 60px;

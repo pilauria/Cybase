@@ -191,8 +191,8 @@ const OrderScreen = ({ match, history }) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Total</Col>
-                  <Col>€{order.totalPrice}</Col>
+                  <Col className='fw-bold'>Total</Col>
+                  <Col className='fw-bold'>€{order.totalPrice}</Col>
                 </Row>
               </ListGroup.Item>
               {!order.isPaid && (
