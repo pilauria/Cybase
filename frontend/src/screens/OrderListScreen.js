@@ -25,7 +25,7 @@ const OrderListScreen = ({ history }) => {
   }, [dispatch, history, userInfo]);
 
   return (
-    <>
+    <div>
       <h1>Orders</h1>
       {loading ? (
         <Loader />
@@ -67,7 +67,7 @@ const OrderListScreen = ({ history }) => {
                 </td>
                 <td>
                   <LinkContainer to={`/order/${order._id}`}>
-                    <Button variant='light' className='btn-sm'>
+                    <Button variant='light' className='btn-sm button-cust'>
                       Details
                     </Button>
                   </LinkContainer>
@@ -77,7 +77,7 @@ const OrderListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </div>
   );
 };
 

@@ -93,7 +93,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <div>
-      <Link to='/admin/productlist' className='btn btn-light my-3'>
+      <Link to='/admin/productlist' className=' my-3 button-cust-dark'>
         Go Back
       </Link>
       <FormContainer>
@@ -183,7 +183,11 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Button type='submit' variant='primary'>
+            <Button
+              type='submit'
+              className='button-cust mt-4'
+              variant='primary'
+            >
               Update
             </Button>
           </Form>

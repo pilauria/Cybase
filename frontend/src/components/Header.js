@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import SearchBox from './SearchBox';
 import { logout } from '../actions/userActions';
+import logo from '../images/logo.png';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Header = () => {
   return (
     <header>
       <Navbar
-        className='ml-auto'
+        className='ml-auto py-1 '
         bg='info'
         variant='dark'
         expand='lg'
@@ -27,7 +28,9 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>Cybase</Navbar.Brand>
+            <Navbar.Brand>
+              <img className='img-responsive' src={logo} alt='logo'></img>
+            </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>

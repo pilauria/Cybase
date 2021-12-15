@@ -46,6 +46,7 @@ const LoginScreen = ({ location, history }) => {
             placeholder='Enter email'
             value={email}
             onChange={e => setEmail(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
@@ -56,10 +57,11 @@ const LoginScreen = ({ location, history }) => {
             placeholder='Enter password'
             value={password}
             onChange={e => setPassword(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='primary' className='my-3 button-cust'>
           Sign In
         </Button>
       </Form>

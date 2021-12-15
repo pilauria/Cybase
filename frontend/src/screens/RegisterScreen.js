@@ -54,6 +54,7 @@ const RegisterScreen = ({ location, history }) => {
             placeholder='Enter name'
             value={name}
             onChange={e => setName(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
@@ -64,6 +65,7 @@ const RegisterScreen = ({ location, history }) => {
             placeholder='Enter email'
             value={email}
             onChange={e => setEmail(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
@@ -74,6 +76,7 @@ const RegisterScreen = ({ location, history }) => {
             placeholder='Enter password'
             value={password}
             onChange={e => setPassword(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
@@ -84,10 +87,11 @@ const RegisterScreen = ({ location, history }) => {
             placeholder='Confirm password'
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
+            className='mb-3'
           ></Form.Control>
         </Form.Group>
 
-        <Button type='submit' variant='primary'>
+        <Button type='submit' variant='primary' className='my-3 button-cust'>
           Register
         </Button>
       </Form>
@@ -105,3 +109,28 @@ const RegisterScreen = ({ location, history }) => {
 };
 
 export default RegisterScreen;
+
+//form valitadion
+//  const submitHandler = e => {
+//    e.preventDefault();
+//    const validEmail = value =>
+//      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value);
+//    const validPassword = new RegExp(
+//      '^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$'
+//    );
+//    try {
+//      if (!validEmail) {
+//        throw new Error('Please enter a valid email address');
+//      } else if (password !== confirmPassword) {
+//        setMessage('Passwords do not match');
+//      } else if (!validPassword) {
+//        throw new Error(
+//          'Password should be at least eight characters, at least one uppercase letter, one lowercase letter, one number and one special character'
+//        );
+//      } else {
+//        dispatch(register(name, email, password));
+//      }
+//    } catch (err) {
+//      setMessage(err.message);
+//    }
+//  };

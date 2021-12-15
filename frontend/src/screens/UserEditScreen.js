@@ -69,6 +69,7 @@ const UserEditScreen = ({ match, history }) => {
                 placeholder='Enter name'
                 value={name}
                 onChange={e => setName(e.target.value)}
+                className='mb-3'
               ></Form.Control>
             </Form.Group>
 
@@ -88,10 +89,11 @@ const UserEditScreen = ({ match, history }) => {
                 label='Is Admin'
                 checked={isAdmin}
                 onChange={e => setIsAdmin(e.target.checked)}
+                className='my-3'
               ></Form.Check>
             </Form.Group>
 
-            <Button type='submit' variant='primary'>
+            <Button type='submit' variant='primary' className='button-cust'>
               Update
             </Button>
           </Form>
