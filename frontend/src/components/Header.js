@@ -28,7 +28,7 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>
+            <Navbar.Brand className='mb-2'>
               <img className='img-responsive' src={logo} alt='logo'></img>
             </Navbar.Brand>
           </LinkContainer>

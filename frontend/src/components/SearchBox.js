@@ -7,7 +7,8 @@ const SearchBox = ({ history }) => {
   const submitHandler = e => {
     e.preventDefault();
     if (keyword.trim()) {
-      history.push(`/search/${keyword}`);
+      history.push(`/search/${encodeURIComponent(keyword)}`); // can search symbols and other characters as well
+      // setKeyword(''); clear serachbox
     } else {
       history.push('/');
     }

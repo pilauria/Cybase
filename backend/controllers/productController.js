@@ -11,7 +11,10 @@ const getProducts = asyncHandler(async (req, res) => {
   const keyword = req.query.keyword
     ? {
         name: {
-          $regex: req.query.keyword, // in this way we can write something that is not the exact name and we can stil get results (i.r. if I write iph I still want iphone to come up)
+          $regex: req.query.keyword.replace(
+            /[-[\]{}()*+?.,\\/^$|#\s]/g,
+            '\\$&'
+          ), // can write something that is not the exact name and we can stil get results (i.r. if I write iph I still want iphone to come up) also can search symbols and other characters as well
           $options: 'i', // case insensitive
         },
       }

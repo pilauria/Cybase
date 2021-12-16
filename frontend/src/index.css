@@ -142,7 +142,8 @@ h3 {
   .img-responsive {
     height: 28px;
     width: auto;
-    margin-left: -39%;
+
+    /* margin-left: -39%; */
   }
 
   /* .carousel {
