@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <header>
       <Navbar
-        className='ml-auto py-1 fixed-top mb-5'
+        className='ml-auto py-1 '
         bg='info'
         variant='dark'
         expand='lg'
@@ -28,7 +28,7 @@ const Header = () => {
       >
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand className='mb-2'>
+            <Navbar.Brand>
               <img className='img-responsive' src={logo} alt='logo'></img>
             </Navbar.Brand>
           </LinkContainer>
