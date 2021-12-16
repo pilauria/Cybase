@@ -313,26 +313,28 @@ Review model
 
 ## API Endpoints (backend routes)
 
-| HTTP Method | URL                    | Request Body                 | Success status | Error Status | Description                                                                                                                     |
-| ----------- | ---------------------- | ---------------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| GET         | `/auth/profile`        | Saved session                | 200            | 404          | Check if user is logged in and return profile page                                                                              |
-| POST        | `/auth/signup`         | {name, email, password}      | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
-| POST        | `/auth/login`          | {username, password}         | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
-| POST        | `/auth/logout`         | (empty)                      | 204            | 400          | Logs out the user                                                                                                               |
-| GET         | `/api/tournaments`     |                              |                | 400          | Show all tournaments                                                                                                            |
-| GET         | `/api/tournaments/:id` | {id}                         |                |              | Show specific tournament                                                                                                        |
-| POST        | `/api/tournaments`     | {}                           | 201            | 400          | Create and save a new tournament                                                                                                |
-| PUT         | `/api/tournaments/:id` | {name,img,players}           | 200            | 400          | edit tournament                                                                                                                 |
-| DELETE      | `/api/tournaments/:id` | {id}                         | 201            | 400          | delete tournament                                                                                                               |
-| GET         | `/api/players`         |                              |                | 400          | show players                                                                                                                    |
-| GET         | `/api/players/:id`     | {id}                         |                |              | show specific player                                                                                                            |
-| POST        | `/api/players`         | {name,img,tournamentId}      | 200            | 404          | add player                                                                                                                      |
-| PUT         | `/api/players/:id`     | {name,img}                   | 201            | 400          | edit player                                                                                                                     |
-| DELETE      | `/api/players/:id`     | {id}                         | 200            | 400          | delete player                                                                                                                   |
-| GET         | `/api/games`           | {}                           | 201            | 400          | show games                                                                                                                      |
-| GET         | `/api/games/:id`       | {id,tournamentId}            |                |              | show specific game                                                                                                              |
-| POST        | `/api/games`           | {player1,player2,winner,img} |                |              | add game                                                                                                                        |
-| PUT         | `/api/games/:id`       | {winner,score}               |                |              | edit game                                                                                                                       |
+| HTTP Method | URL                             | Request Body            | Success status | Error Status | Description                                                                                                                     |
+| ----------- | ------------------------------- | ----------------------- | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| GET         | `/api/users/profile`            | Saved session           | 200            | 404          | Check if user is logged in and return profile page                                                                              |
+| POST        | `/api/users`                    | {name, email, password} | 201            | 404          | Checks if fields not empty (422) and user not exists (409), then create user with encrypted password, and store user in session |
+| POST        | `/auth/login`                   | {username, password}    | 200            | 401          | Checks if fields not empty (422), if user exists (404), and if password matches (404), then stores user in session              |
+| POST        | `/auth/logout`                  | (empty)                 | 204            | 400          | Logs out the user                                                                                                               |
+| DEL         | `api/users/:id`                 |                         |                | 400          | Delete a user, admin only                                                                                                       |
+| PUT         | `/api/users/profile`            | {id}                    |                |              | Show specific tournament                                                                                                        |
+| GET         | `/api/users/:id`                | {}                      | 201            | 400          | Get users by ID. Admin only                                                                                                     |
+| PUT         | `/api/users`                    | {}                      | 200            | 400          | Get all users. Admin only                                                                                                       |
+| DELETE      | `Update user by ID. Admin Only` | {id}                    | 201            | 400          | delete tournament                                                                                                               |
+| GET         | `/api/orders/:id`               |                         |                | 400          | Get an order by ID                                                                                                              |
+| PUT         | `/api/players/:id`              | {id}                    |                |              | Update user by ID. Admin Only                                                                                                   |
+| GET         | `/api/orders/myorders`          | {}                      | 200            | 404          | Get logged in users order                                                                                                       |
+| GET         | `/api/products`                 | {name,img}              | 201            | 400          | Get all products                                                                                                                |
+| GET         | `/api/products/:id`             | {id}                    | 200            | 400          | Get single product by id                                                                                                        |
+| DEL         | `/api/products/:id`             | {}                      | 201            | 400          | Delete product. Admin only.                                                                                                     |
+| GET         | `/api/products`                 | {}                      |                |              | Add new sample product                                                                                                          |
+| POST        | `/api/products/:id/reviews`     | {}                      |                |              | Add new product review                                                                                                          |
+| POST        | `/api/users/login`              | {}                      |                |              | Authenticate users and get token                                                                                                |
+| GET         | `/api/orders/:id`               | {}                      |                |              | Get an order by ID                                                                                                              |
+| GET         | `/api/orders/myorders`          | {}                      |                |              | Get logged in users order ID                                                                                                    |
 
 <br>
 
@@ -340,18 +342,18 @@ Review model
 
 ### Trello/Kanban
 
-[Link to your trello board](https://trello.com/b/PBqtkUFX/curasan)
+[Link to your trello board](https://trello.com/)
 or picture of your physical board
 
 ### Git
 
 The url to your repository and to your deployed project
 
-[Client repository Link](https://github.com/screeeen/project-client)
+[Client repository Link](https://github.com/pilauria/Cybase)
 
-[Server repository Link](https://github.com/screeeen/project-server)
+[Server repository Link](https://github.com/pilauria/Cybase)
 
-[Deployed App Link](http://heroku.com)
+[Deployed App Link](https://cibaseapp.herokuapp.com/)
 
 ### Slides
 
