@@ -25,7 +25,7 @@ const OrderListScreen = ({ history }) => {
   }, [dispatch, history, userInfo]);
 
   return (
-    <div>
+    <div className='my-2'>
       <h1>Orders</h1>
       {loading ? (
         <Loader />

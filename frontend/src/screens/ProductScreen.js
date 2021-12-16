@@ -68,9 +68,9 @@ const ProductScreen = ({ history, match }) => {
   };
 
   return (
-    <div>
+    <div className='my-5'>
       <Link className='button-cust-dark' to='/'>
-        <i class='fas fa-angle-double-left'>&nbsp;&nbsp; Back</i>
+        <i className='fas fa-angle-double-left'>&nbsp;&nbsp; Back</i>
       </Link>
       {loading ? (
         <Loader />

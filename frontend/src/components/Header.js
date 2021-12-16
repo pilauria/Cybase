@@ -1,10 +1,10 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Route } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import SearchBox from './SearchBox';
 import { logout } from '../actions/userActions';
+import SearchBox from './SearchBox';
 import logo from '../images/logo.png';
 
 const Header = () => {
@@ -18,9 +18,9 @@ const Header = () => {
   };
 
   return (
-    <header>
+    <header className='my-5'>
       <Navbar
-        className='ml-auto py-1 '
+        className='ml-auto py-1 fixed-top '
         bg='info'
         variant='dark'
         expand='lg'

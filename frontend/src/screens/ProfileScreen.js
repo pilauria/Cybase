@@ -56,7 +56,7 @@ const ProfileScreen = ({ location, history }) => {
   };
 
   return (
-    <Row className='mt-5'>
+    <Row className='mt-3'>
       <Col md={3} className='mt-4'>
         <h2>User Profile</h2>
         {message && <Message variant='danger'>{message}</Message>}
