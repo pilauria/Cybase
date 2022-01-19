@@ -1,4 +1,4 @@
-# M3 - `README.md` Example
+# Cybase App
 
 <br>
 
