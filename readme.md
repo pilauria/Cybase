@@ -2,8 +2,6 @@
 
 [Deployed App Link](https://cibaseapp.herokuapp.com/)
 
-<br>
-
 ## Description
 
 Cibase is a bicycle e-commerce marketplace app where you can buy bycicles.
