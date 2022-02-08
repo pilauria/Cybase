@@ -1,6 +1,6 @@
 # Cybase App
 
-[Deployed App Link](https://cibaseapp.herokuapp.com/)
+[App demo](https://cibaseapp.herokuapp.com/)
 
 ## Description
 
