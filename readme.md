@@ -4,7 +4,7 @@
 
 ## Description
 
-Cibase is a bicycle e-commerce marketplace app where you can buy bycicles.
+Cibase is a bicycle e-commerce app where you can buy bycicles.
 
 ## User Stories
 
