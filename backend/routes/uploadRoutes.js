@@ -37,7 +37,9 @@ const upload = multer({
 });
 
 router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${escapeHtml(req.file.path)}`);
+  const safeFilePath = path.basename(req.file.path); // Extract just the filename
+  res.send(`File uploaded successfully: ${safeFilePath}`);
 });
+
 
 export default router;
