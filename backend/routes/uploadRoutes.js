@@ -36,10 +36,14 @@ const upload = multer({
   },
 });
 
+const escapeHtml = require('escape-html'); // Already imported in your file
+
 router.post('/', upload.single('image'), (req, res) => {
   const safeFilePath = path.basename(req.file.path); // Extract just the filename
-res.send(`File uploaded successfully: ${safeFilePath}`);
+  const sanitizedFilePath = escapeHtml(safeFilePath); // Sanitize the extracted filename
+  res.send(`File uploaded successfully: ${sanitizedFilePath}`);
 });
+
 
 
 export default router;
