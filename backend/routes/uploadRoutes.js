@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
+import escapeHtml from 'escape-html';
 
 const router = express.Router();
 
@@ -36,7 +37,7 @@ const upload = multer({
 });
 
 router.post('/', upload.single('image'), (req, res) => {
-  res.send(`/${req.file.path}`);
+  res.send(`/${escapeHtml(req.file.path)}`);
 });
 
 export default router;
