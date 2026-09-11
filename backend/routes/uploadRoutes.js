@@ -31,12 +31,17 @@ function checkFileType(file, cb) {
 
 const upload = multer({
   storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024,
+    files: 1,
+    fields: 0,
+    fieldNestingDepth: 1,
+    fieldArrayIndexLimit: 1,
+  },
   fileFilter: function (req, file, cb) {
     checkFileType(file, cb);
   },
 });
-
-const escapeHtml = require('escape-html'); // Already imported in your file
 
 router.post('/', upload.single('image'), (req, res) => {
   const safeFilePath = path.basename(req.file.path); // Extract just the filename
