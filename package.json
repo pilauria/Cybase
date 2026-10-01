@@ -27,7 +27,7 @@
     "express-async-handler": "^1.1.4",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^6.13.11",
-    "morgan": "^1.10.0",
+    "morgan": "^1.12.1",
     "multer": "^2.3.0",
     "escape-html": "^1.0.3"
   },
